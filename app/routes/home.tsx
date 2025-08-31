@@ -1,7 +1,7 @@
 import type { Route } from "./+types/home";
 import { useState, useEffect } from "react";
 import { ChessPuzzle } from "../components/ChessPuzzle";
-import { getRandomPuzzle, type PuzzleData } from "../utils/puzzleLoader";
+import { getRandomPuzzle, getRandomPuzzleByDifficulty, type PuzzleData, type DifficultyLevel } from "../utils/puzzleLoader";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -11,27 +11,35 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
-  const [puzzleData, setPuzzleData] = useState<PuzzleData>({
-    puzzleId: "00008",
-    fen: "r6k/pp2r2p/4Rp1Q/3p4/8/1N1P2R1/PqP2bPP/7K b - - 0 24",
-    rating: 1900
-  });
-  const [loading, setLoading] = useState(false);
+  const [puzzleData, setPuzzleData] = useState<PuzzleData | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  const loadRandomPuzzle = async () => {
+  const loadPuzzleByDifficulty = async (difficulty: DifficultyLevel) => {
+    setLoading(true);
+    try {
+      const newPuzzle = await getRandomPuzzleByDifficulty(difficulty);
+      setPuzzleData(newPuzzle);
+    } catch (error) {
+      console.error('Failed to load puzzle:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const loadInitialPuzzle = async () => {
     setLoading(true);
     try {
       const newPuzzle = await getRandomPuzzle();
       setPuzzleData(newPuzzle);
     } catch (error) {
-      console.error('Failed to load random puzzle:', error);
+      console.error('Failed to load initial puzzle:', error);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    loadRandomPuzzle();
+    loadInitialPuzzle();
   }, []);
 
   return (
@@ -41,14 +49,14 @@ export default function Home() {
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
           <div className="text-gray-600">Loading puzzle...</div>
         </div>
-      ) : (
+      ) : puzzleData ? (
         <ChessPuzzle 
           puzzleId={puzzleData.puzzleId}
           fen={puzzleData.fen}
           rating={puzzleData.rating}
-          onNewPuzzle={loadRandomPuzzle}
+          onDifficultySelect={loadPuzzleByDifficulty}
         />
-      )}
+      ) : null}
     </div>
   );
 }
