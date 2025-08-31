@@ -51,32 +51,74 @@ function getPieceImage(piece: ChessPiece): string {
 
 export function ChessBoard({ fen }: ChessBoardProps) {
   const board = parseFEN(fen);
+  const files = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+  const ranks = ['8', '7', '6', '5', '4', '3', '2', '1'];
   
   return (
-    <div className="inline-block border-2 border-gray-800">
-      {board.map((rank, rankIndex) => (
-        <div key={rankIndex} className="flex">
-          {rank.map((piece, fileIndex) => {
-            const isLight = (rankIndex + fileIndex) % 2 === 0;
-            const squareColor = isLight ? 'bg-amber-100' : 'bg-amber-800';
-            
-            return (
-              <div
-                key={fileIndex}
-                className={`w-12 h-12 flex items-center justify-center ${squareColor}`}
-              >
-                {piece && (
-                  <img
-                    src={getPieceImage(piece)}
-                    alt={`${piece.color} ${piece.type}`}
-                    className="w-10 h-10"
-                  />
-                )}
-              </div>
-            );
-          })}
+    <div className="inline-block">
+      <div className="flex">
+        <div className="w-6"></div>
+        {files.map((file) => (
+          <div key={file} className="w-12 h-6 flex items-center justify-center">
+            <span className="text-sm font-semibold text-gray-700">{file}</span>
+          </div>
+        ))}
+        <div className="w-6"></div>
+      </div>
+      
+      <div className="flex">
+        <div className="flex flex-col">
+          {ranks.map((rank) => (
+            <div key={rank} className="w-6 h-12 flex items-center justify-center">
+              <span className="text-sm font-semibold text-gray-700">{rank}</span>
+            </div>
+          ))}
         </div>
-      ))}
+        
+        <div className="border-2 border-gray-800">
+          {board.map((rank, rankIndex) => (
+            <div key={rankIndex} className="flex">
+              {rank.map((piece, fileIndex) => {
+                const isLight = (rankIndex + fileIndex) % 2 === 0;
+                const squareColor = isLight ? 'bg-amber-100' : 'bg-amber-800';
+                
+                return (
+                  <div
+                    key={fileIndex}
+                    className={`w-12 h-12 flex items-center justify-center ${squareColor}`}
+                  >
+                    {piece && (
+                      <img
+                        src={getPieceImage(piece)}
+                        alt={`${piece.color} ${piece.type}`}
+                        className="w-10 h-10"
+                      />
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          ))}
+        </div>
+        
+        <div className="flex flex-col">
+          {ranks.map((rank) => (
+            <div key={rank} className="w-6 h-12 flex items-center justify-center">
+              <span className="text-sm font-semibold text-gray-700">{rank}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+      
+      <div className="flex">
+        <div className="w-6"></div>
+        {files.map((file) => (
+          <div key={file} className="w-12 h-6 flex items-center justify-center">
+            <span className="text-sm font-semibold text-gray-700">{file}</span>
+          </div>
+        ))}
+        <div className="w-6"></div>
+      </div>
     </div>
   );
 }
