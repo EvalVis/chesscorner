@@ -11,11 +11,22 @@ export interface DifficultyRange {
   max: number;
 }
 
-export const DIFFICULTY_RANGES: Record<DifficultyLevel, DifficultyRange> = {
-  easy: { min: 0, max: 600 },
-  medium: { min: 600, max: 1600 },
-  hard: { min: 1600, max: Infinity }
-};
+function getDifficultyRanges(): Record<DifficultyLevel, DifficultyRange> {
+  const easyMin = parseInt(import.meta.env.VITE_EASY_MIN_RATING) || 0;
+  const easyMax = parseInt(import.meta.env.VITE_EASY_MAX_RATING) || 600;
+  const mediumMin = parseInt(import.meta.env.VITE_MEDIUM_MIN_RATING) || 600;
+  const mediumMax = parseInt(import.meta.env.VITE_MEDIUM_MAX_RATING) || 1600;
+  const hardMin = parseInt(import.meta.env.VITE_HARD_MIN_RATING) || 1600;
+  const hardMax = parseInt(import.meta.env.VITE_HARD_MAX_RATING) || 9999;
+
+  return {
+    easy: { min: easyMin, max: easyMax },
+    medium: { min: mediumMin, max: mediumMax },
+    hard: { min: hardMin, max: hardMax === 9999 ? Infinity : hardMax }
+  };
+}
+
+export const DIFFICULTY_RANGES = getDifficultyRanges();
 
 let puzzleCache: string[] | null = null;
 

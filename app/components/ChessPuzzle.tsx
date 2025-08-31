@@ -69,21 +69,21 @@ export function ChessPuzzle({ puzzleId, fen, rating, onNewPuzzle, onDifficultySe
               className="px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-medium rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg flex flex-col items-center min-w-[120px]"
             >
               <span className="font-bold">Easy</span>
-              <span className="text-sm opacity-90">0-600</span>
+              <span className="text-sm opacity-90">{DIFFICULTY_RANGES.easy.min}-{DIFFICULTY_RANGES.easy.max}</span>
             </button>
             <button
               onClick={() => onDifficultySelect('medium')}
               className="px-6 py-3 bg-yellow-500 hover:bg-yellow-600 text-white font-medium rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg flex flex-col items-center min-w-[120px]"
             >
               <span className="font-bold">Medium</span>
-              <span className="text-sm opacity-90">600-1600</span>
+              <span className="text-sm opacity-90">{DIFFICULTY_RANGES.medium.min}-{DIFFICULTY_RANGES.medium.max}</span>
             </button>
             <button
               onClick={() => onDifficultySelect('hard')}
               className="px-6 py-3 bg-red-500 hover:bg-red-600 text-white font-medium rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg flex flex-col items-center min-w-[120px]"
             >
               <span className="font-bold">Hard</span>
-              <span className="text-sm opacity-90">1600+</span>
+              <span className="text-sm opacity-90">{DIFFICULTY_RANGES.hard.min}+</span>
             </button>
           </div>
         </div>
