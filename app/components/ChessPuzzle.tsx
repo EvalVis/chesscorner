@@ -4,6 +4,7 @@ interface ChessPuzzleProps {
   puzzleId: string;
   fen: string;
   rating: number;
+  onNewPuzzle?: () => void;
 }
 
 function getActivePlayer(fen: string): 'White' | 'Black' {
@@ -11,7 +12,7 @@ function getActivePlayer(fen: string): 'White' | 'Black' {
   return parts[1] === 'w' ? 'White' : 'Black';
 }
 
-export function ChessPuzzle({ puzzleId, fen, rating }: ChessPuzzleProps) {
+export function ChessPuzzle({ puzzleId, fen, rating, onNewPuzzle }: ChessPuzzleProps) {
   const activePlayer = getActivePlayer(fen);
   
   return (
@@ -35,6 +36,15 @@ export function ChessPuzzle({ puzzleId, fen, rating }: ChessPuzzleProps) {
       </div>
       
       <ChessBoard fen={fen} />
+      
+      {onNewPuzzle && (
+        <button
+          onClick={onNewPuzzle}
+          className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg"
+        >
+          New Random Puzzle
+        </button>
+      )}
     </div>
   );
 }
