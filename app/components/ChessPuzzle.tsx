@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { ChessBoard } from './ChessBoard';
 import { type DifficultyLevel, DIFFICULTY_RANGES } from '../utils/puzzleLoader';
 
@@ -27,9 +28,14 @@ function getDifficultyColor(rating: number): string {
 }
 
 export function ChessPuzzle({ puzzleId, fen, rating, onNewPuzzle, onDifficultySelect }: ChessPuzzleProps) {
+  const [isBoardFlipped, setIsBoardFlipped] = useState(false);
   const activePlayer = getActivePlayer(fen);
   const difficultyLabel = getDifficultyLabel(rating);
   const difficultyColor = getDifficultyColor(rating);
+  
+  const handleFlipBoard = () => {
+    setIsBoardFlipped(!isBoardFlipped);
+  };
   
   return (
     <div className="flex flex-col items-center space-y-6 p-6 bg-white rounded-lg shadow-lg max-w-2xl">
@@ -52,7 +58,7 @@ export function ChessPuzzle({ puzzleId, fen, rating, onNewPuzzle, onDifficultySe
         </div>
       </div>
       
-      <ChessBoard fen={fen} />
+      <ChessBoard fen={fen} flipped={isBoardFlipped} onFlip={handleFlipBoard} />
       
       {onDifficultySelect && (
         <div className="flex flex-col items-center space-y-4 w-full">
