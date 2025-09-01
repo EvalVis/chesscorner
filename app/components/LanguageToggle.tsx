@@ -8,23 +8,23 @@ export function LanguageToggle() {
   };
 
   return (
-    <div className="flex rounded-md overflow-hidden bg-gray-100 text-sm">
+    <div className="flex rounded-xl overflow-hidden bg-white border-2 border-gray-200 shadow-lg">
       <button
         onClick={() => handleLanguageChange('en')}
-        className={`px-2 py-1 font-medium transition-colors ${
+        className={`px-4 py-2 font-bold text-base transition-all duration-300 transform ${
           language === 'en'
-            ? 'bg-blue-100 text-blue-700'
-            : 'text-gray-600 hover:bg-gray-200'
+            ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-md scale-105'
+            : 'text-gray-600 hover:bg-gray-50 hover:text-gray-800 hover:scale-102'
         }`}
       >
         EN
       </button>
       <button
         onClick={() => handleLanguageChange('lt')}
-        className={`px-2 py-1 font-medium transition-colors ${
+        className={`px-4 py-2 font-bold text-base transition-all duration-300 transform ${
           language === 'lt'
-            ? 'bg-blue-100 text-blue-700'
-            : 'text-gray-600 hover:bg-gray-200'
+            ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-md scale-105'
+            : 'text-gray-600 hover:bg-gray-50 hover:text-gray-800 hover:scale-102'
         }`}
       >
         LT
