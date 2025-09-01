@@ -63,8 +63,8 @@ export default function Puzzles() {
           <div className="text-gray-600">{t('loadingPuzzle')}</div>
         </div>
       ) : puzzleData ? (
-        <div className="relative">
-          <div className="absolute top-4 left-4 z-10">
+        <div className="space-y-4">
+          <div className="flex justify-center">
             <LanguageToggle />
           </div>
           <ChessPuzzle 
