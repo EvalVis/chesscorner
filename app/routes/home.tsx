@@ -1,6 +1,7 @@
 import type { Route } from "./+types/home";
 import { useState, useEffect } from "react";
 import { ChessPuzzle } from "../components/ChessPuzzle";
+import { useLanguage } from "../contexts/LanguageContext";
 import { getRandomPuzzle, getRandomPuzzleByDifficulty, type PuzzleData, type DifficultyLevel } from "../utils/puzzleLoader";
 
 export function meta({}: Route.MetaArgs) {
@@ -11,6 +12,7 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
+  const { t } = useLanguage();
   const [puzzleData, setPuzzleData] = useState<PuzzleData | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -47,7 +49,7 @@ export default function Home() {
       {loading ? (
         <div className="flex flex-col items-center space-y-4 p-6 bg-white rounded-lg shadow-lg">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-          <div className="text-gray-600">Loading puzzle...</div>
+          <div className="text-gray-600">{t('loadingPuzzle')}</div>
         </div>
       ) : puzzleData ? (
         <ChessPuzzle 

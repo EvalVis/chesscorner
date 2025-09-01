@@ -1,3 +1,5 @@
+import { useLanguage } from '../contexts/LanguageContext';
+
 interface ChessPiece {
   type: 'p' | 'r' | 'n' | 'b' | 'q' | 'k';
   color: 'white' | 'black';
@@ -52,6 +54,7 @@ function getPieceImage(piece: ChessPiece): string {
 }
 
 export function ChessBoard({ fen, flipped = false, onFlip }: ChessBoardProps) {
+  const { t } = useLanguage();
   const board = parseFEN(fen);
   const files = flipped ? ['h', 'g', 'f', 'e', 'd', 'c', 'b', 'a'] : ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
   const ranks = flipped ? ['1', '2', '3', '4', '5', '6', '7', '8'] : ['8', '7', '6', '5', '4', '3', '2', '1'];
@@ -67,7 +70,7 @@ export function ChessBoard({ fen, flipped = false, onFlip }: ChessBoardProps) {
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
           </svg>
-          <span>Flip Board</span>
+          <span>{t('flipBoard')}</span>
         </button>
       )}
       
