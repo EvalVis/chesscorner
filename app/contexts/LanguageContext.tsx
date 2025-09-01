@@ -48,7 +48,9 @@ type TranslationKey =
   | 'chessPuzzlesTitle'
   | 'chessPuzzlesDescription'
   | 'customRulesTitle'
-  | 'customRulesDescription';
+  | 'customRulesDescription'
+  | 'suggestion'
+  | 'suggestionText';
 
 const translations: Record<Language, Record<TranslationKey, string>> = {
   en: {
@@ -76,7 +78,9 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     chessPuzzlesTitle: 'Chess Puzzles',
     chessPuzzlesDescription: 'Solve tactical puzzles of varying difficulty levels to sharpen your chess skills',
     customRulesTitle: 'Custom Rules',
-    customRulesDescription: 'Discover fun and challenging rule variants to spice up your chess games'
+    customRulesDescription: 'Discover fun and challenging rule variants to spice up your chess games',
+    suggestion: 'Suggestion',
+    suggestionText: 'Reveal one card each turn'
   },
   lt: {
     chessPuzzle: 'Šachmatų Uždavinys',
@@ -103,7 +107,9 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     chessPuzzlesTitle: 'Šachmatų uždaviniai',
     chessPuzzlesDescription: 'Spręskite taktinius uždavinius skirtingų sunkumo lygių, siekdami patobulinti šachmatų įgūdžius',
     customRulesTitle: 'Papildomos taisyklės',
-    customRulesDescription: 'Atraskite smagias ir iššūkius keliančias taisyklių variacijas šachmatų žaidimams'
+    customRulesDescription: 'Atraskite smagias ir iššūkius keliančias taisyklių variacijas šachmatų žaidimams',
+    suggestion: 'Pasiūlymas',
+    suggestionText: 'Atverskite po vieną kortelę kiekvieno ėjimo metu'
   }
 };
 
