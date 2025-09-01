@@ -18,7 +18,7 @@ export default function Home() {
       <div className="text-center space-y-8 max-w-2xl">
         <div className="space-y-4 relative">
           <h1 className="text-6xl font-bold text-gray-800 mb-4">
-            Chess Corner
+            {t('chessCorner')}
           </h1>
           <div className="flex justify-center">
             <LanguageToggle />
