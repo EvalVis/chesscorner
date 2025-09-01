@@ -87,10 +87,10 @@ export function CustomRulesDisplay() {
             >
               <button
                 onClick={() => deleteRule(rule)}
-                className="absolute top-2 right-2 w-6 h-6 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center text-xs font-bold transition-colors duration-200"
+                className="absolute top-2 right-2 w-10 h-10 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center text-xs font-bold transition-colors duration-200"
                 title="Delete rule"
               >
-                ×
+                X
               </button>
               <p className="text-gray-800 font-medium leading-relaxed pr-8">{rule.text}</p>
             </div>
