@@ -65,7 +65,7 @@ export function CustomRulesDisplay() {
           disabled={availableRules.length === 0}
           className="px-4 py-2 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg"
         >
-          {availableRules.length === 0 ? 'No More Rules' : `Reveal New Rule (${availableRules.length} left)`}
+          {availableRules.length === 0 ? t('noMoreRules') : `${t('revealNewRule')} (${availableRules.length} ${t('left')})`}
         </button>
         
         {displayedRules.length > 0 && (
@@ -73,7 +73,7 @@ export function CustomRulesDisplay() {
             onClick={clearAllRules}
             className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white font-medium rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg"
           >
-            Clear All Rules
+            {t('clearAllRules')}
           </button>
         )}
       </div>

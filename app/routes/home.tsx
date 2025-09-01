@@ -15,7 +15,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 flex items-center justify-center p-4 relative">
-      <Header />
+      <Header showNavigation={false} />
       <div className="text-center space-y-8 max-w-2xl">
         <div className="space-y-4">
           <h1 className="text-6xl font-bold text-gray-800 mb-4">

@@ -38,7 +38,11 @@ type TranslationKey =
   | 'flipBoard'
   | 'loadingPuzzle'
   | 'language'
-  | 'customRules';
+  | 'customRules'
+  | 'revealNewRule'
+  | 'clearAllRules'
+  | 'noMoreRules'
+  | 'left';
 
 const translations: Record<Language, Record<TranslationKey, string>> = {
   en: {
@@ -56,7 +60,11 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     flipBoard: 'Flip Board',
     loadingPuzzle: 'Loading puzzle...',
     language: 'Language',
-    customRules: 'Custom Rules'
+    customRules: 'Custom Rules',
+    revealNewRule: 'Reveal New Rule',
+    clearAllRules: 'Clear All Rules',
+    noMoreRules: 'No More Rules',
+    left: 'left'
   },
   lt: {
     chessPuzzle: 'Šachmatų Uždavinys',
@@ -73,7 +81,11 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     flipBoard: 'Apsukti lentą',
     loadingPuzzle: 'Kraunamas uždavinys...',
     language: 'Kalba',
-    customRules: 'Papildomos Taisyklės'
+    customRules: 'Papildomos taisyklės',
+    revealNewRule: 'Rodyti papildomą taisyklę',
+    clearAllRules: 'Panaikinti visas rodomas taisykles',
+    noMoreRules: 'Daugiau taisyklių nėra',
+    left: 'liko'
   }
 };
 
