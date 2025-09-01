@@ -53,7 +53,7 @@ export default function Puzzles() {
           to="/"
           className="px-4 py-2 bg-white/80 backdrop-blur-sm text-gray-700 hover:text-gray-900 font-medium rounded-lg shadow-sm hover:shadow-md transition-all duration-200"
         >
-          ← Back to Home
+          {t('backToHome')}
         </Link>
       </div>
       

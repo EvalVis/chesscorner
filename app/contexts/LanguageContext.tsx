@@ -42,7 +42,8 @@ type TranslationKey =
   | 'revealNewRule'
   | 'clearAllRules'
   | 'noMoreRules'
-  | 'left';
+  | 'left'
+  | 'backToHome';
 
 const translations: Record<Language, Record<TranslationKey, string>> = {
   en: {
@@ -64,7 +65,8 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     revealNewRule: 'Reveal New Rule',
     clearAllRules: 'Clear All Rules',
     noMoreRules: 'No More Rules',
-    left: 'left'
+    left: 'left',
+    backToHome: '← Back to Home'
   },
   lt: {
     chessPuzzle: 'Šachmatų Uždavinys',
@@ -85,7 +87,8 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     revealNewRule: 'Rodyti papildomą taisyklę',
     clearAllRules: 'Panaikinti visas rodomas taisykles',
     noMoreRules: 'Daugiau taisyklių nėra',
-    left: 'liko'
+    left: 'liko',
+    backToHome: '← Grįžti į pradžią'
   }
 };
 
