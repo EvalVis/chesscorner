@@ -35,7 +35,6 @@ Pawns cannot promote.
 Rooks can hop over friendly pieces.
 Queen can hop over friendly pieces.
 Bishops can hop over friendly pieces.
-Pawns cannot promote.
 If you check your opponent's king 3 times, you win.
 You can only promote your pawns to a knight.
 Knights cannot jump over pieces.
