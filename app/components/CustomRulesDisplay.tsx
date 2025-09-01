@@ -8,15 +8,22 @@ export function CustomRulesDisplay() {
   const [displayedRules, setDisplayedRules] = useState<CustomRule[]>([]);
   const [loading, setLoading] = useState(false);
 
-  // Load rules when language changes
   useEffect(() => {
     const loadRulesForLanguage = async () => {
       setLoading(true);
       try {
         const rules = await loadRules(language);
-        setAvailableRules(rules);
-        // Clear displayed rules when language changes
-        setDisplayedRules([]);
+        
+        if (displayedRules.length > 0) {
+          const displayedIds = displayedRules.map(rule => rule.id);
+          const newDisplayedRules = rules.filter(rule => displayedIds.includes(rule.id));
+          const newAvailableRules = rules.filter(rule => !displayedIds.includes(rule.id));
+          
+          setDisplayedRules(newDisplayedRules);
+          setAvailableRules(newAvailableRules);
+        } else {
+          setAvailableRules(rules);
+        }
       } catch (error) {
         console.error('Failed to load rules:', error);
       } finally {
@@ -25,7 +32,7 @@ export function CustomRulesDisplay() {
     };
 
     loadRulesForLanguage();
-  }, [language]);
+  }, [language, displayedRules.length]);
 
   const revealNewRule = () => {
     if (availableRules.length === 0) {
