@@ -38,8 +38,8 @@ export default function Home() {
                   </svg>
                 </div>
               </div>
-              <h3 className="text-2xl font-bold text-gray-800">Chess Puzzles</h3>
-              <p className="text-gray-600 leading-relaxed">Solve tactical puzzles of varying difficulty levels to sharpen your chess skills</p>
+              <h3 className="text-2xl font-bold text-gray-800">{t('chessPuzzlesTitle')}</h3>
+              <p className="text-gray-600 leading-relaxed">{t('chessPuzzlesDescription')}</p>
             </div>
           </Link>
           
@@ -55,8 +55,8 @@ export default function Home() {
                   </svg>
                 </div>
               </div>
-              <h3 className="text-2xl font-bold text-gray-800">Custom Rules</h3>
-              <p className="text-gray-600 leading-relaxed">Discover fun and challenging rule variants to spice up your chess games</p>
+              <h3 className="text-2xl font-bold text-gray-800">{t('customRulesTitle')}</h3>
+              <p className="text-gray-600 leading-relaxed">{t('customRulesDescription')}</p>
             </div>
           </Link>
         </div>

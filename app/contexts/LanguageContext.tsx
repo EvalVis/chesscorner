@@ -44,7 +44,11 @@ type TranslationKey =
   | 'noMoreRules'
   | 'left'
   | 'backToHome'
-  | 'chessCorner';
+  | 'chessCorner'
+  | 'chessPuzzlesTitle'
+  | 'chessPuzzlesDescription'
+  | 'customRulesTitle'
+  | 'customRulesDescription';
 
 const translations: Record<Language, Record<TranslationKey, string>> = {
   en: {
@@ -68,7 +72,11 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     noMoreRules: 'No More Rules',
     left: 'left',
     backToHome: '← Back to Home',
-    chessCorner: 'Chess Corner'
+    chessCorner: 'Chess Corner',
+    chessPuzzlesTitle: 'Chess Puzzles',
+    chessPuzzlesDescription: 'Solve tactical puzzles of varying difficulty levels to sharpen your chess skills',
+    customRulesTitle: 'Custom Rules',
+    customRulesDescription: 'Discover fun and challenging rule variants to spice up your chess games'
   },
   lt: {
     chessPuzzle: 'Šachmatų Uždavinys',
@@ -91,7 +99,11 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     noMoreRules: 'Daugiau taisyklių nėra',
     left: 'liko',
     backToHome: '← Grįžti į pradžią',
-    chessCorner: 'Šachmatų kampelis'
+    chessCorner: 'Šachmatų kampelis',
+    chessPuzzlesTitle: 'Šachmatų uždaviniai',
+    chessPuzzlesDescription: 'Spręskite taktinius uždavinius skirtingų sunkumo lygių, siekdami patobulinti šachmatų įgūdžius',
+    customRulesTitle: 'Papildomos taisyklės',
+    customRulesDescription: 'Atraskite smagias ir iššūkius keliančias taisyklių variacijas šachmatų žaidimams'
   }
 };
 
