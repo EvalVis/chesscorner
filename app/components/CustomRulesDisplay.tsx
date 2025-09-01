@@ -40,9 +40,13 @@ export function CustomRulesDisplay() {
   };
 
   const clearAllRules = () => {
-    // Move all displayed rules back to available rules
     setAvailableRules(prev => [...prev, ...displayedRules].sort((a, b) => a.id - b.id));
     setDisplayedRules([]);
+  };
+
+  const deleteRule = (ruleToDelete: CustomRule) => {
+    setDisplayedRules(prev => prev.filter(rule => rule.id !== ruleToDelete.id));
+    setAvailableRules(prev => [...prev, ruleToDelete].sort((a, b) => a.id - b.id));
   };
 
   if (loading) {
@@ -79,9 +83,16 @@ export function CustomRulesDisplay() {
           {displayedRules.map((rule, index) => (
             <div
               key={`${rule.id}-${index}`}
-              className="bg-gradient-to-r from-purple-50 to-purple-100 border border-purple-200 rounded-lg p-4 shadow-sm"
+              className="bg-gradient-to-r from-purple-50 to-purple-100 border border-purple-200 rounded-lg p-4 shadow-sm relative"
             >
-              <p className="text-gray-800 font-medium leading-relaxed">{rule.text}</p>
+              <button
+                onClick={() => deleteRule(rule)}
+                className="absolute top-2 right-2 w-6 h-6 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center text-xs font-bold transition-colors duration-200"
+                title="Delete rule"
+              >
+                ×
+              </button>
+              <p className="text-gray-800 font-medium leading-relaxed pr-8">{rule.text}</p>
             </div>
           ))}
         </div>
