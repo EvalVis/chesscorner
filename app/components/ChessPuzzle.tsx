@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { ChessBoard } from './ChessBoard';
-import { LanguageToggle } from './LanguageToggle';
 import { useLanguage } from '../contexts/LanguageContext';
 import { type DifficultyLevel, DIFFICULTY_RANGES } from '../utils/puzzleLoader';
 
@@ -41,10 +40,7 @@ export function ChessPuzzle({ puzzleId, fen, rating, onNewPuzzle, onDifficultySe
   };
   
   return (
-    <div className="flex flex-col items-center space-y-6 p-6 bg-white rounded-lg shadow-lg max-w-2xl relative">
-      <div className="absolute top-4 right-4">
-        <LanguageToggle />
-      </div>
+    <div className="flex flex-col items-center space-y-6 p-6 bg-white rounded-lg shadow-lg max-w-2xl">
       <div className="text-center">
         <h2 className="text-2xl font-bold text-gray-800 mb-2">{t('chessPuzzle')}</h2>
         <div className="flex flex-col space-y-1 text-sm text-gray-600">

@@ -1,72 +1,62 @@
 import type { Route } from "./+types/home";
-import { useState, useEffect } from "react";
-import { ChessPuzzle } from "../components/ChessPuzzle";
-import { CustomRulesDisplay } from "../components/CustomRulesDisplay";
+import { Link } from "react-router";
+import { Header } from "../components/Header";
 import { useLanguage } from "../contexts/LanguageContext";
-import { getRandomPuzzle, getRandomPuzzleByDifficulty, type PuzzleData, type DifficultyLevel } from "../utils/puzzleLoader";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "Chess Corner - Puzzle" },
-    { name: "description", content: "Solve chess puzzles and improve your game!" },
+    { title: "Chess Corner" },
+    { name: "description", content: "Improve your chess skills with puzzles and custom rules!" },
   ];
 }
 
 export default function Home() {
   const { t } = useLanguage();
-  const [puzzleData, setPuzzleData] = useState<PuzzleData | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  const loadPuzzleByDifficulty = async (difficulty: DifficultyLevel) => {
-    setLoading(true);
-    try {
-      const newPuzzle = await getRandomPuzzleByDifficulty(difficulty);
-      setPuzzleData(newPuzzle);
-    } catch (error) {
-      console.error('Failed to load puzzle:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const loadInitialPuzzle = async () => {
-    setLoading(true);
-    try {
-      const newPuzzle = await getRandomPuzzle();
-      setPuzzleData(newPuzzle);
-    } catch (error) {
-      console.error('Failed to load initial puzzle:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    loadInitialPuzzle();
-  }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
-      <div className="max-w-6xl mx-auto space-y-8">
-        <div className="flex justify-center">
-          {loading ? (
-            <div className="flex flex-col items-center space-y-4 p-6 bg-white rounded-lg shadow-lg">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-              <div className="text-gray-600">{t('loadingPuzzle')}</div>
-            </div>
-          ) : puzzleData ? (
-            <ChessPuzzle 
-              puzzleId={puzzleData.puzzleId}
-              fen={puzzleData.fen}
-              rating={puzzleData.rating}
-              onDifficultySelect={loadPuzzleByDifficulty}
-            />
-          ) : null}
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 flex items-center justify-center p-4 relative">
+      <Header />
+      <div className="text-center space-y-8 max-w-2xl">
+        <div className="space-y-4">
+          <h1 className="text-6xl font-bold text-gray-800 mb-4">
+            Chess Corner
+          </h1>
         </div>
         
-        <div className="bg-white rounded-lg shadow-lg p-6">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">{t('customRules')}</h2>
-          <CustomRulesDisplay />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl">
+          <Link
+            to="/puzzles"
+            className="group bg-gradient-to-br from-blue-50 to-blue-100 hover:from-blue-100 hover:to-blue-200 border-2 border-blue-200 hover:border-blue-300 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+          >
+            <div className="text-center space-y-4">
+              <div className="flex justify-center">
+                <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                  </svg>
+                </div>
+              </div>
+              <h3 className="text-2xl font-bold text-gray-800">Chess Puzzles</h3>
+              <p className="text-gray-600 leading-relaxed">Solve tactical puzzles of varying difficulty levels to sharpen your chess skills</p>
+            </div>
+          </Link>
+          
+          <Link
+            to="/custom-rules"
+            className="group bg-gradient-to-br from-purple-50 to-purple-100 hover:from-purple-100 hover:to-purple-200 border-2 border-purple-200 hover:border-purple-300 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+          >
+            <div className="text-center space-y-4">
+              <div className="flex justify-center">
+                <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                  </svg>
+                </div>
+              </div>
+              <h3 className="text-2xl font-bold text-gray-800">Custom Rules</h3>
+              <p className="text-gray-600 leading-relaxed">Discover fun and challenging rule variants to spice up your chess games</p>
+            </div>
+          </Link>
         </div>
       </div>
     </div>
