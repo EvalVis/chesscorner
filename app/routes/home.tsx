@@ -1,6 +1,7 @@
 import type { Route } from "./+types/home";
 import { useState, useEffect } from "react";
 import { ChessPuzzle } from "../components/ChessPuzzle";
+import { CustomRulesDisplay } from "../components/CustomRulesDisplay";
 import { useLanguage } from "../contexts/LanguageContext";
 import { getRandomPuzzle, getRandomPuzzleByDifficulty, type PuzzleData, type DifficultyLevel } from "../utils/puzzleLoader";
 
@@ -45,20 +46,29 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
-      {loading ? (
-        <div className="flex flex-col items-center space-y-4 p-6 bg-white rounded-lg shadow-lg">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-          <div className="text-gray-600">{t('loadingPuzzle')}</div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+      <div className="max-w-6xl mx-auto space-y-8">
+        <div className="flex justify-center">
+          {loading ? (
+            <div className="flex flex-col items-center space-y-4 p-6 bg-white rounded-lg shadow-lg">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+              <div className="text-gray-600">{t('loadingPuzzle')}</div>
+            </div>
+          ) : puzzleData ? (
+            <ChessPuzzle 
+              puzzleId={puzzleData.puzzleId}
+              fen={puzzleData.fen}
+              rating={puzzleData.rating}
+              onDifficultySelect={loadPuzzleByDifficulty}
+            />
+          ) : null}
         </div>
-      ) : puzzleData ? (
-        <ChessPuzzle 
-          puzzleId={puzzleData.puzzleId}
-          fen={puzzleData.fen}
-          rating={puzzleData.rating}
-          onDifficultySelect={loadPuzzleByDifficulty}
-        />
-      ) : null}
+        
+        <div className="bg-white rounded-lg shadow-lg p-6">
+          <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">{t('customRules')}</h2>
+          <CustomRulesDisplay />
+        </div>
+      </div>
     </div>
   );
 }

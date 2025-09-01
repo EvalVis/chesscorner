@@ -1,0 +1,45 @@
+Queens cannot be captured unless they check the King.
+Pawns can capture forward.
+Knights can move two times in a single turn.
+Pawns can move two squares anytime.
+Pawns can move backwards.
+To checkmate the king all his pawns must be captured.
+Pawns cannot be promoted to a queen.
+Queen cannot capture pawns.
+Rooks cannot capture pawns.
+Bishops cannot capture pawns.
+Bishops can only move 1 square.
+Bishops can only move 2 squares.
+Bishops can only move 3 squares.
+Bishops can only move 4 squares.
+Queen can only move 1 square.
+Queen can only move 2 squares.
+Queen can only move 3 squares.
+Queen can only move 4 squares.
+Rooks can only move 1 square.
+Rooks can only move 2 squares.
+Rooks can only move 3 squares.
+Rooks can only move 4 squares.
+King can move 2 squares.
+King can move 3 squares.
+Pawns can pushback a piece in a front.
+Queen cannot move until all friendly pawns are moved or captured.
+Queen cannot checkmate the king.
+You must tell a story to your opponent to move your queen.
+Check becomes checkmate for you if you are out of pawns.
+Bishops cannot take any piece.
+Rooks cannot take any piece.
+Queen cannot take any piece.
+Knights cannot take any piece.
+Pawns cannot promote.
+Rooks can hop over friendly pieces.
+Queen can hop over friendly pieces.
+Bishops can hop over friendly pieces.
+Pawns cannot promote.
+If you check your opponent's king 3 times, you win.
+You can only promote your pawns to a knight.
+Knights cannot jump over pieces.
+If a king is checked 3 times, the game ends in a draw.
+This turn only all additional rules are void.
+King and a pawn can swap places.
+Moving a queen costs you a pawn. If there are no pawns you cannot move the Queen.

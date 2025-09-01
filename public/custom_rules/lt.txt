@@ -1,0 +1,44 @@
+Valdovės kirsti negalima, nebent valdovė šachuoja karalių.
+Pėstininkai gali kirsti priekyje esančią figūrą.
+Žirgai gali atlikti du ėjimus vietoje vieno.
+Pėstininkai gali eiti 2 langelius.
+Pėstininkai gali eiti atgal.
+Karalius negali būti užmatuotas kol turi bent vieną pėstininką.
+Pėstininkai negali būti pakeisti į Valdovę.
+Valdovė negali kirsti pėstininkų.
+Bokštai negali kirsti pėstininkų.
+Rikiai negali kirsti pėstininkų.
+Rikiai gali eiti tik 1 langelį.
+Rikiai gali eiti tik 2 langelius.
+Rikiai gali eiti tik 3 langelius.
+Rikiai gali eiti tik 4 langelius.
+Valdovė gali eiti tik 1 langelį.
+Valdovė gali eiti tik 2 langelius.
+Valdovė gali eiti tik 3 langelius.
+Valdovė gali eiti tik 4 langelius.
+Bokštai gali eiti tik 1 langelį.
+Bokštai gali eiti tik 2 langelius.
+Bokštai gali eiti tik 3 langelius.
+Bokštai gali eiti tik 4 langelius.
+Karalius gali eiti 2 langelius.
+Karalius gali eiti 3 langelius.
+Pėstininkai 1 langeliu atgal gali pastumti priekyje esančią figūrą.
+Valdovė negali judėti, kol visi savi ant lentos esantys pėstininkai nepajudėjo.
+Valdovė negali užmatuoti karaliaus.
+Kad paeitum su Valdove, turi papasakoti savo priešininkui istoriją.
+Šachas tampa šachu ir matu jei karalius nebeturi pėstininkų.
+Rikiai negali kirsti figūrų.
+Bokštai negali kirsti figūrų.
+Valdovė negali kirsti figūrų.
+Žirgai negali kirsti figūrų.
+Pėstininkai negali būti pakeisti kitomis figūromis.
+Bokštai gali peršokti saviškius.
+Valdovė gali peršokti saviškius.
+Rikiai gali peršokti saviškius.
+Pėstininkai gali būti pakeisti tik Žirgais.
+Žaidėjas, šachuodamas karalių 3 kartus, laimi žaidimą.
+Žirgai negali peršokti figūrų.
+Jei karalius gauna šachą tris kartus, žaidimas baigiamas lygiosiomis.
+Šį ėjimą galioja tik standartinės šachmatų taisyklės.
+Karalius ir pėstininkai gali apsikeisti vietomis.
+Valdovės ėjimas kainuoja vieną pėstininką. Neturint pėstininkų valdovė negali eiti.

@@ -6,7 +6,7 @@ export type Language = 'en' | 'lt';
 interface LanguageContextType {
   language: Language;
   setLanguage: (language: Language) => void;
-  t: (key: string) => string;
+  t: (key: TranslationKey) => string;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -37,7 +37,8 @@ type TranslationKey =
   | 'newRandomPuzzle'
   | 'flipBoard'
   | 'loadingPuzzle'
-  | 'language';
+  | 'language'
+  | 'customRules';
 
 const translations: Record<Language, Record<TranslationKey, string>> = {
   en: {
@@ -54,7 +55,8 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     newRandomPuzzle: 'New Random Puzzle',
     flipBoard: 'Flip Board',
     loadingPuzzle: 'Loading puzzle...',
-    language: 'Language'
+    language: 'Language',
+    customRules: 'Custom Rules'
   },
   lt: {
     chessPuzzle: 'Šachmatų Uždavinys',
@@ -70,7 +72,8 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     newRandomPuzzle: 'Naujas uždavinys',
     flipBoard: 'Apsukti lentą',
     loadingPuzzle: 'Kraunamas uždavinys...',
-    language: 'Kalba'
+    language: 'Kalba',
+    customRules: 'Papildomos Taisyklės'
   }
 };
 
