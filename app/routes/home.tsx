@@ -1,6 +1,6 @@
 import type { Route } from "./+types/home";
 import { Link } from "react-router";
-import { Header } from "../components/Header";
+import { LanguageToggle } from "../components/LanguageToggle";
 import { useLanguage } from "../contexts/LanguageContext";
 
 export function meta({}: Route.MetaArgs) {
@@ -15,12 +15,14 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 flex items-center justify-center p-4 relative">
-      <Header showNavigation={false} />
       <div className="text-center space-y-8 max-w-2xl">
-        <div className="space-y-4">
+        <div className="space-y-4 relative">
           <h1 className="text-6xl font-bold text-gray-800 mb-4">
             Chess Corner
           </h1>
+          <div className="flex justify-center">
+            <LanguageToggle />
+          </div>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl">

@@ -1,7 +1,8 @@
 import type { Route } from "./+types/puzzles";
 import { useState, useEffect } from "react";
+import { Link } from "react-router";
 import { ChessPuzzle } from "../components/ChessPuzzle";
-import { Header } from "../components/Header";
+import { LanguageToggle } from "../components/LanguageToggle";
 import { useLanguage } from "../contexts/LanguageContext";
 import { getRandomPuzzle, getRandomPuzzleByDifficulty, type PuzzleData, type DifficultyLevel } from "../utils/puzzleLoader";
 
@@ -46,20 +47,33 @@ export default function Puzzles() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4 relative">
-      <Header showNavigation />
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col items-center justify-center p-4 space-y-6">
+      <div className="flex justify-center">
+        <Link
+          to="/"
+          className="px-4 py-2 bg-white/80 backdrop-blur-sm text-gray-700 hover:text-gray-900 font-medium rounded-lg shadow-sm hover:shadow-md transition-all duration-200"
+        >
+          ← Back to Home
+        </Link>
+      </div>
+      
       {loading ? (
         <div className="flex flex-col items-center space-y-4 p-6 bg-white rounded-lg shadow-lg">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
           <div className="text-gray-600">{t('loadingPuzzle')}</div>
         </div>
       ) : puzzleData ? (
-        <ChessPuzzle 
-          puzzleId={puzzleData.puzzleId}
-          fen={puzzleData.fen}
-          rating={puzzleData.rating}
-          onDifficultySelect={loadPuzzleByDifficulty}
-        />
+        <div className="relative">
+          <div className="absolute top-4 left-4 z-10">
+            <LanguageToggle />
+          </div>
+          <ChessPuzzle 
+            puzzleId={puzzleData.puzzleId}
+            fen={puzzleData.fen}
+            rating={puzzleData.rating}
+            onDifficultySelect={loadPuzzleByDifficulty}
+          />
+        </div>
       ) : null}
     </div>
   );
