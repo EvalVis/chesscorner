@@ -57,17 +57,21 @@ export async function getAllThemes(): Promise<string[]> {
 
   try {
     const puzzles = await loadPuzzleData();
-    const themeSet = new Set<string>();
+    const themeCount = new Map<string, number>();
     
     puzzles.forEach(line => {
       const columns = line.split(',');
       if (columns.length > 7) {
         const themes = columns[7].split(' ').filter(theme => theme.trim() !== '');
-        themes.forEach(theme => themeSet.add(theme));
+        themes.forEach(theme => {
+          themeCount.set(theme, (themeCount.get(theme) || 0) + 1);
+        });
       }
     });
 
-    allThemes = Array.from(themeSet).sort();
+    allThemes = Array.from(themeCount.entries())
+      .sort((a, b) => b[1] - a[1])
+      .map(([theme]) => theme);
     return allThemes;
   } catch (error) {
     console.error('Error loading themes:', error);
@@ -79,7 +83,7 @@ export async function getThemesForDifficulty(difficulty: DifficultyLevel): Promi
   try {
     const puzzles = await loadPuzzleData();
     const range = DIFFICULTY_RANGES[difficulty];
-    const themeSet = new Set<string>();
+    const themeCount = new Map<string, number>();
     
     puzzles.forEach(line => {
       const columns = line.split(',');
@@ -87,11 +91,15 @@ export async function getThemesForDifficulty(difficulty: DifficultyLevel): Promi
       
       if (rating >= range.min && rating < range.max && columns.length > 7) {
         const themes = columns[7].split(' ').filter(theme => theme.trim() !== '');
-        themes.forEach(theme => themeSet.add(theme));
+        themes.forEach(theme => {
+          themeCount.set(theme, (themeCount.get(theme) || 0) + 1);
+        });
       }
     });
 
-    return Array.from(themeSet).sort();
+    return Array.from(themeCount.entries())
+      .sort((a, b) => b[1] - a[1])
+      .map(([theme]) => theme);
   } catch (error) {
     console.error('Error loading themes for difficulty:', error);
     return [];
