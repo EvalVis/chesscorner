@@ -121,7 +121,7 @@ const themeTranslations: Record<Language, Record<string, string>> = {
   en: {
     master: 'Master play',
     rookEndgame: 'Rook endgame',
-    denfensiveMove: 'Defensive move',
+    defensiveMove: 'Defensive move',
     mate: 'Mate',
     mateIn1: 'Mate in 1',
     mateIn2: 'Mate in 2',
@@ -176,7 +176,7 @@ const themeTranslations: Record<Language, Record<string, string>> = {
   lt: {
     master: 'Meistrų žaidimas',
     rookEndgame: 'Bokštų endšpilis',
-    denfensiveMove: 'Ginybinis ėjimas',
+    defensiveMove: 'Ginybinis ėjimas',
     mate: 'Matas',
     mateIn1: 'Matas 1 ėjimu',
     mateIn2: 'Matas 2 ėjimais',
