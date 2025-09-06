@@ -29,7 +29,6 @@ function getDifficultyRanges(): Record<DifficultyLevel, DifficultyRange> {
 export const DIFFICULTY_RANGES = getDifficultyRanges();
 
 let puzzleCache: string[] | null = null;
-let matePuzzleCache: string[] | null = null;
 
 async function loadPuzzleData(): Promise<string[]> {
   if (puzzleCache) {
@@ -49,32 +48,12 @@ async function loadPuzzleData(): Promise<string[]> {
   }
 }
 
-async function loadMatePuzzleData(): Promise<string[]> {
-  if (matePuzzleCache) {
-    return matePuzzleCache;
-  }
-
-  try {
-    const response = await fetch('/puzzles/mate_lichess_db_puzzle.csv');
-    const csvText = await response.text();
-    const lines = csvText.split('\n');
-    
-    matePuzzleCache = lines.slice(1).filter(line => line.trim() !== '');
-    return matePuzzleCache;
-  } catch (error) {
-    console.error('Error loading mate puzzle data:', error);
-    throw error;
-  }
-}
-
 export async function getRandomPuzzleByDifficulty(difficulty: DifficultyLevel): Promise<PuzzleData> {
   try {
-    const puzzles = difficulty === 'easy' ? await loadMatePuzzleData() : await loadPuzzleData();
-    
-    let filteredPuzzles: string[];
-    
+    const puzzles = await loadPuzzleData();
     const range = DIFFICULTY_RANGES[difficulty];
-    filteredPuzzles = puzzles.filter(line => {
+    
+    const filteredPuzzles = puzzles.filter(line => {
       const columns = line.split(',');
       const rating = parseInt(columns[1]);
       return rating >= range.min && rating < range.max;
