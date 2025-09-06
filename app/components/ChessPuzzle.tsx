@@ -32,7 +32,7 @@ function getDifficultyColor(rating: number): string {
 }
 
 export function ChessPuzzle({ puzzleId, fen, rating, themes, selectedDifficulty, onNewPuzzle, onDifficultySelect, onThemeSelect }: ChessPuzzleProps) {
-  const { t } = useLanguage();
+  const { t, translateTheme } = useLanguage();
   const [isBoardFlipped, setIsBoardFlipped] = useState(false);
   const [availableThemes, setAvailableThemes] = useState<string[]>([]);
   const activePlayer = getActivePlayer(fen);
@@ -129,7 +129,7 @@ export function ChessPuzzle({ puzzleId, fen, rating, themes, selectedDifficulty,
 
       {onThemeSelect && availableThemes.length > 0 && (
         <div className="flex flex-col items-center space-y-4 w-full">
-          <h3 className="text-lg font-semibold text-gray-800">Choose Theme</h3>
+          <h3 className="text-lg font-semibold text-gray-800">{t('chooseTheme')}</h3>
           <div className="flex flex-wrap gap-3 justify-center">
             {availableThemes.map((theme) => (
               <button
@@ -137,7 +137,7 @@ export function ChessPuzzle({ puzzleId, fen, rating, themes, selectedDifficulty,
                 onClick={() => onThemeSelect(theme)}
                 className="px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white font-medium rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg"
               >
-                {theme}
+                {translateTheme(theme)}
               </button>
             ))}
           </div>

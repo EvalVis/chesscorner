@@ -7,6 +7,7 @@ interface LanguageContextType {
   language: Language;
   setLanguage: (language: Language) => void;
   t: (key: TranslationKey) => string;
+  translateTheme: (theme: string) => string;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -50,7 +51,8 @@ type TranslationKey =
   | 'customRulesTitle'
   | 'customRulesDescription'
   | 'suggestion'
-  | 'suggestionText';
+  | 'suggestionText'
+  | 'chooseTheme';
 
 const translations: Record<Language, Record<TranslationKey, string>> = {
   en: {
@@ -80,7 +82,8 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     customRulesTitle: 'Custom Rules',
     customRulesDescription: 'Discover fun and challenging rule variants to spice up your chess games',
     suggestion: 'Suggestion',
-    suggestionText: 'Reveal one card each turn'
+    suggestionText: 'Reveal one card each turn',
+    chooseTheme: 'Choose Theme'
   },
   lt: {
     chessPuzzle: 'Šachmatų Uždavinys',
@@ -109,7 +112,115 @@ const translations: Record<Language, Record<TranslationKey, string>> = {
     customRulesTitle: 'Papildomos taisyklės',
     customRulesDescription: 'Atraskite smagias ir iššūkius keliančias taisyklių variacijas šachmatų žaidimams',
     suggestion: 'Pasiūlymas',
-    suggestionText: 'Atverskite po vieną kortelę kiekvieno ėjimo metu'
+    suggestionText: 'Atverskite po vieną kortelę kiekvieno ėjimo metu',
+    chooseTheme: 'Pasirinkite temą'
+  }
+};
+
+const themeTranslations: Record<Language, Record<string, string>> = {
+  en: {
+    mate: 'Mate',
+    mateIn1: 'Mate in 1',
+    mateIn2: 'Mate in 2',
+    mateIn3: 'Mate in 3',
+    mateIn4: 'Mate in 4',
+    mateIn5: 'Mate in 5',
+    endgame: 'Endgame',
+    middlegame: 'Middlegame',
+    opening: 'Opening',
+    tactics: 'Tactics',
+    puzzle: 'Puzzle',
+    gameEnding: 'Game Ending',
+    short: 'Short',
+    long: 'Long',
+    veryLong: 'Very Long',
+    oneMove: 'One Move',
+    crushing: 'Crushing',
+    advantage: 'Advantage',
+    equality: 'Equality',
+    fork: 'Fork',
+    pin: 'Pin',
+    skewer: 'Skewer',
+    discoveredAttack: 'Discovered Attack',
+    doubleCheck: 'Double Check',
+    sacrifice: 'Sacrifice',
+    deflection: 'Deflection',
+    attraction: 'Attraction',
+    clearance: 'Clearance',
+    zwischenzug: 'Zwischenzug',
+    quietMove: 'Quiet Move',
+    xRayAttack: 'X-Ray Attack',
+    promotion: 'Promotion',
+    underPromotion: 'Under Promotion',
+    castling: 'Castling',
+    enPassant: 'En Passant',
+    capturingDefender: 'Capturing Defender',
+    attackingF2F7: 'Attacking f2/f7',
+    doubleAttack: 'Double Attack',
+    trappedPiece: 'Trapped Piece',
+    hangingPiece: 'Hanging Piece',
+    kingsideAttack: 'Kingside Attack',
+    queensideAttack: 'Queenside Attack',
+    backRankMate: 'Back Rank Mate',
+    smotheredMate: 'Smothered Mate',
+    arabianMate: 'Arabian Mate',
+    anastasiaMate: 'Anastasia Mate',
+    bodenMate: 'Boden Mate',
+    doubleBishopMate: 'Double Bishop Mate',
+    dovetailMate: 'Dovetail Mate',
+    hookMate: 'Hook Mate'
+  },
+  lt: {
+    mate: 'Matas',
+    mateIn1: 'Matas 1 ėjimu',
+    mateIn2: 'Matas 2 ėjimais',
+    mateIn3: 'Matas 3 ėjimais',
+    mateIn4: 'Matas 4 ėjimais',
+    mateIn5: 'Matas 5 ėjimais',
+    endgame: 'Endšpilis',
+    middlegame: 'Viduržaidis',
+    opening: 'Debiutas',
+    tactics: 'Taktika',
+    puzzle: 'Uždavinys',
+    gameEnding: 'Partijos pabaiga',
+    short: 'Trumpas uždavinys',
+    long: 'Ilgas uždavinys',
+    veryLong: 'Labai ilgas uždavinys',
+    oneMove: 'Vieno ėjimo uždavinys',
+    crushing: 'Sutriuškinimas',
+    advantage: 'Pranašumas',
+    equality: 'Lygybė',
+    fork: 'Šakutė',
+    pin: 'Prispaudimas',
+    skewer: 'Iešmas',
+    discoveredAttack: 'Atskleista ataka',
+    doubleCheck: 'Dvigubas šachas',
+    sacrifice: 'Auka',
+    deflection: 'Nukreipimas',
+    attraction: 'Pritraukimas',
+    clearance: 'Išvalymas',
+    zwischenzug: 'Tarpinis ėjimas',
+    quietMove: 'Tylus ėjimas',
+    xRayAttack: 'Rentgeno ataka',
+    promotion: 'Paaukštinimas',
+    underPromotion: 'Nevisavertis paaukštinimas',
+    castling: 'Rokiruotė',
+    enPassant: 'Pėstininko kirtis',
+    capturingDefender: 'Gynėjo ėmimas',
+    attackingF2F7: 'Puolimas f2/f7',
+    doubleAttack: 'Dvigubas puolimas',
+    trappedPiece: 'Užspausta figūra',
+    hangingPiece: 'Kabanti figūra',
+    kingsideAttack: 'Puolimas karaliaus pusėje',
+    queensideAttack: 'Puolimas valdovės pusėje',
+    backRankMate: 'Paskutinės eilės matas',
+    smotheredMate: 'Uždusintasis matas',
+    arabianMate: 'Arabiškas matas',
+    anastasiaMate: 'Anastasijos matas',
+    bodenMate: 'Bodeno matas',
+    doubleBishopMate: 'Dviejų rikių matas',
+    dovetailMate: 'Kregždės uodegos matas',
+    hookMate: 'Kabliuko matas'
   }
 };
 
@@ -120,8 +231,12 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
     return translations[language][key] || key;
   };
 
+  const translateTheme = (theme: string): string => {
+    return themeTranslations[language][theme] || theme;
+  };
+
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage, t, translateTheme }}>
       {children}
     </LanguageContext.Provider>
   );
