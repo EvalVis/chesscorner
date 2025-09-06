@@ -176,7 +176,7 @@ const themeTranslations: Record<Language, Record<string, string>> = {
   lt: {
     master: 'Meistrų žaidimas',
     rookEndgame: 'Bokštų endšpilis',
-    defensiveMove: 'Ginybinis ėjimas',
+    defensiveMove: 'Gynybinis ėjimas',
     mate: 'Matas',
     mateIn1: 'Matas 1 ėjimu',
     mateIn2: 'Matas 2 ėjimais',
