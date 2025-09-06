@@ -83,9 +83,7 @@ export function ChessPuzzle({ puzzleId, fen, rating, themes, selectedDifficulty,
           </div>
         </div>
       </div>
-      
-      <ChessBoard fen={fen} flipped={isBoardFlipped} onFlip={handleFlipBoard} />
-      
+
       {onDifficultySelect && (
         <div className="flex flex-col items-center space-y-4 w-full">
           <h3 className="text-lg font-semibold text-gray-800">{t('chooseDifficulty')}</h3>
@@ -143,6 +141,8 @@ export function ChessPuzzle({ puzzleId, fen, rating, themes, selectedDifficulty,
           </div>
         </div>
       )}
+      
+      <ChessBoard fen={fen} flipped={isBoardFlipped} onFlip={handleFlipBoard} />
         
       {onNewPuzzle && (
         <button
