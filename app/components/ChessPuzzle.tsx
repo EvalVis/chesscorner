@@ -1,14 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ChessBoard } from './ChessBoard';
 import { useLanguage } from '../contexts/LanguageContext';
-import { type DifficultyLevel, DIFFICULTY_RANGES } from '../utils/puzzleLoader';
+import { type DifficultyLevel, DIFFICULTY_RANGES, getAllThemes } from '../utils/puzzleLoader';
 
 interface ChessPuzzleProps {
   puzzleId: string;
   fen: string;
   rating: number;
+  themes?: string[];
   onNewPuzzle?: () => void;
   onDifficultySelect?: (difficulty: DifficultyLevel) => void;
+  onThemeSelect?: (theme: string) => void;
 }
 
 function getActivePlayer(fen: string): 'white' | 'black' {
@@ -28,12 +30,28 @@ function getDifficultyColor(rating: number): string {
   return 'text-red-600';
 }
 
-export function ChessPuzzle({ puzzleId, fen, rating, onNewPuzzle, onDifficultySelect }: ChessPuzzleProps) {
+export function ChessPuzzle({ puzzleId, fen, rating, themes, onNewPuzzle, onDifficultySelect, onThemeSelect }: ChessPuzzleProps) {
   const { t } = useLanguage();
   const [isBoardFlipped, setIsBoardFlipped] = useState(false);
+  const [availableThemes, setAvailableThemes] = useState<string[]>([]);
   const activePlayer = getActivePlayer(fen);
   const difficultyLabel = getDifficultyLabel(rating, t);
   const difficultyColor = getDifficultyColor(rating);
+
+  useEffect(() => {
+    const loadThemes = async () => {
+      try {
+        const themes = await getAllThemes();
+        setAvailableThemes(themes.slice(0, 12));
+      } catch (error) {
+        console.error('Failed to load themes:', error);
+      }
+    };
+
+    if (onThemeSelect) {
+      loadThemes();
+    }
+  }, [onThemeSelect]);
   
   const handleFlipBoard = () => {
     setIsBoardFlipped(!isBoardFlipped);
@@ -90,7 +108,24 @@ export function ChessPuzzle({ puzzleId, fen, rating, onNewPuzzle, onDifficultySe
           </div>
         </div>
       )}
-      
+
+      {onThemeSelect && availableThemes.length > 0 && (
+        <div className="flex flex-col items-center space-y-4 w-full">
+          <h3 className="text-lg font-semibold text-gray-800">Choose Theme</h3>
+          <div className="flex flex-wrap gap-3 justify-center">
+            {availableThemes.map((theme) => (
+              <button
+                key={theme}
+                onClick={() => onThemeSelect(theme)}
+                className="px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white font-medium rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg"
+              >
+                {theme}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+        
       {onNewPuzzle && (
         <button
           onClick={onNewPuzzle}

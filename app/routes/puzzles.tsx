@@ -4,7 +4,7 @@ import { Link } from "react-router";
 import { ChessPuzzle } from "../components/ChessPuzzle";
 import { LanguageToggle } from "../components/LanguageToggle";
 import { useLanguage } from "../contexts/LanguageContext";
-import { getRandomPuzzle, getRandomPuzzleByDifficulty, type PuzzleData, type DifficultyLevel } from "../utils/puzzleLoader";
+import { getRandomPuzzle, getRandomPuzzleByDifficulty, getRandomPuzzleByTheme, type PuzzleData, type DifficultyLevel } from "../utils/puzzleLoader";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -25,6 +25,18 @@ export default function Puzzles() {
       setPuzzleData(newPuzzle);
     } catch (error) {
       console.error('Failed to load puzzle:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const loadPuzzleByTheme = async (theme: string) => {
+    setLoading(true);
+    try {
+      const newPuzzle = await getRandomPuzzleByTheme(theme);
+      setPuzzleData(newPuzzle);
+    } catch (error) {
+      console.error('Failed to load puzzle by theme:', error);
     } finally {
       setLoading(false);
     }
@@ -71,7 +83,9 @@ export default function Puzzles() {
             puzzleId={puzzleData.puzzleId}
             fen={puzzleData.fen}
             rating={puzzleData.rating}
+            themes={puzzleData.themes}
             onDifficultySelect={loadPuzzleByDifficulty}
+            onThemeSelect={loadPuzzleByTheme}
           />
         </div>
       ) : null}

@@ -2,6 +2,7 @@ export interface PuzzleData {
   puzzleId: string;
   fen: string;
   rating: number;
+  themes: string[];
 }
 
 export type DifficultyLevel = 'easy' | 'medium' | 'hard';
@@ -29,6 +30,7 @@ function getDifficultyRanges(): Record<DifficultyLevel, DifficultyRange> {
 export const DIFFICULTY_RANGES = getDifficultyRanges();
 
 let puzzleCache: string[] | null = null;
+let allThemes: string[] | null = null;
 
 async function loadPuzzleData(): Promise<string[]> {
   if (puzzleCache) {
@@ -45,6 +47,78 @@ async function loadPuzzleData(): Promise<string[]> {
   } catch (error) {
     console.error('Error loading puzzle data:', error);
     throw error;
+  }
+}
+
+export async function getAllThemes(): Promise<string[]> {
+  if (allThemes) {
+    return allThemes;
+  }
+
+  try {
+    const puzzles = await loadPuzzleData();
+    const themeSet = new Set<string>();
+    
+    puzzles.forEach(line => {
+      const columns = line.split(',');
+      if (columns.length > 7) {
+        const themes = columns[7].split(' ').filter(theme => theme.trim() !== '');
+        themes.forEach(theme => themeSet.add(theme));
+      }
+    });
+
+    allThemes = Array.from(themeSet).sort();
+    return allThemes;
+  } catch (error) {
+    console.error('Error loading themes:', error);
+    return [];
+  }
+}
+
+export async function getRandomPuzzleByTheme(theme: string, difficulty?: DifficultyLevel): Promise<PuzzleData> {
+  try {
+    const puzzles = await loadPuzzleData();
+    
+    let filteredPuzzles = puzzles.filter(line => {
+      const columns = line.split(',');
+      if (columns.length > 7) {
+        const themes = columns[7].split(' ');
+        return themes.includes(theme);
+      }
+      return false;
+    });
+
+    if (difficulty) {
+      const range = DIFFICULTY_RANGES[difficulty];
+      filteredPuzzles = filteredPuzzles.filter(line => {
+        const columns = line.split(',');
+        const rating = parseInt(columns[1]);
+        return rating >= range.min && rating < range.max;
+      });
+    }
+
+    if (filteredPuzzles.length === 0) {
+      throw new Error(`No puzzles found for theme: ${theme}${difficulty ? ` and difficulty: ${difficulty}` : ''}`);
+    }
+
+    const randomIndex = Math.floor(Math.random() * filteredPuzzles.length);
+    const randomLine = filteredPuzzles[randomIndex];
+    const columns = randomLine.split(',');
+    
+    return {
+      puzzleId: columns[0],
+      fen: columns[2],
+      rating: parseInt(columns[1]),
+      themes: columns[7].split(' ').filter(theme => theme.trim() !== '')
+    };
+  } catch (error) {
+    console.error('Error loading puzzle by theme:', error);
+    return {
+      puzzleId: "00008",
+      fen: "r6k/pp2r2p/4Rp1Q/3p4/8/1N1P2R1/PqP2bPP/7K b - - 0 24",
+      rating: 1900,
+      themes: ['mate', 'mateIn1']
+    };
   }
 }
 
@@ -70,14 +144,16 @@ export async function getRandomPuzzleByDifficulty(difficulty: DifficultyLevel): 
     return {
       puzzleId: columns[0],
       fen: columns[2],
-      rating: parseInt(columns[1])
+      rating: parseInt(columns[1]),
+      themes: columns[7] ? columns[7].split(' ').filter(theme => theme.trim() !== '') : []
     };
   } catch (error) {
     console.error('Error loading puzzle:', error);
     return {
       puzzleId: "00008",
       fen: "r6k/pp2r2p/4Rp1Q/3p4/8/1N1P2R1/PqP2bPP/7K b - - 0 24",
-      rating: 1900
+      rating: 1900,
+      themes: ['mate', 'mateIn1']
     };
   }
 }
