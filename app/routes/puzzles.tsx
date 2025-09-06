@@ -17,9 +17,11 @@ export default function Puzzles() {
   const { t } = useLanguage();
   const [puzzleData, setPuzzleData] = useState<PuzzleData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [selectedDifficulty, setSelectedDifficulty] = useState<DifficultyLevel | null>(null);
 
   const loadPuzzleByDifficulty = async (difficulty: DifficultyLevel) => {
     setLoading(true);
+    setSelectedDifficulty(difficulty);
     try {
       const newPuzzle = await getRandomPuzzleByDifficulty(difficulty);
       setPuzzleData(newPuzzle);
@@ -33,7 +35,10 @@ export default function Puzzles() {
   const loadPuzzleByTheme = async (theme: string) => {
     setLoading(true);
     try {
-      const newPuzzle = await getRandomPuzzleByTheme(theme);
+      // Use the selected difficulty if available, otherwise load any theme
+      const newPuzzle = selectedDifficulty 
+        ? await getRandomPuzzleByTheme(theme, selectedDifficulty)
+        : await getRandomPuzzleByTheme(theme);
       setPuzzleData(newPuzzle);
     } catch (error) {
       console.error('Failed to load puzzle by theme:', error);
@@ -84,6 +89,7 @@ export default function Puzzles() {
             fen={puzzleData.fen}
             rating={puzzleData.rating}
             themes={puzzleData.themes}
+            selectedDifficulty={selectedDifficulty}
             onDifficultySelect={loadPuzzleByDifficulty}
             onThemeSelect={loadPuzzleByTheme}
           />

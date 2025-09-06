@@ -75,6 +75,29 @@ export async function getAllThemes(): Promise<string[]> {
   }
 }
 
+export async function getThemesForDifficulty(difficulty: DifficultyLevel): Promise<string[]> {
+  try {
+    const puzzles = await loadPuzzleData();
+    const range = DIFFICULTY_RANGES[difficulty];
+    const themeSet = new Set<string>();
+    
+    puzzles.forEach(line => {
+      const columns = line.split(',');
+      const rating = parseInt(columns[1]);
+      
+      if (rating >= range.min && rating < range.max && columns.length > 7) {
+        const themes = columns[7].split(' ').filter(theme => theme.trim() !== '');
+        themes.forEach(theme => themeSet.add(theme));
+      }
+    });
+
+    return Array.from(themeSet).sort();
+  } catch (error) {
+    console.error('Error loading themes for difficulty:', error);
+    return [];
+  }
+}
+
 export async function getRandomPuzzleByTheme(theme: string, difficulty?: DifficultyLevel): Promise<PuzzleData> {
   try {
     const puzzles = await loadPuzzleData();

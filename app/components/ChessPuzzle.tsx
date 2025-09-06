@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { ChessBoard } from './ChessBoard';
 import { useLanguage } from '../contexts/LanguageContext';
-import { type DifficultyLevel, DIFFICULTY_RANGES, getAllThemes } from '../utils/puzzleLoader';
+import { type DifficultyLevel, DIFFICULTY_RANGES, getAllThemes, getThemesForDifficulty } from '../utils/puzzleLoader';
 
 interface ChessPuzzleProps {
   puzzleId: string;
   fen: string;
   rating: number;
   themes?: string[];
+  selectedDifficulty?: DifficultyLevel | null;
   onNewPuzzle?: () => void;
   onDifficultySelect?: (difficulty: DifficultyLevel) => void;
   onThemeSelect?: (theme: string) => void;
@@ -30,7 +31,7 @@ function getDifficultyColor(rating: number): string {
   return 'text-red-600';
 }
 
-export function ChessPuzzle({ puzzleId, fen, rating, themes, onNewPuzzle, onDifficultySelect, onThemeSelect }: ChessPuzzleProps) {
+export function ChessPuzzle({ puzzleId, fen, rating, themes, selectedDifficulty, onNewPuzzle, onDifficultySelect, onThemeSelect }: ChessPuzzleProps) {
   const { t } = useLanguage();
   const [isBoardFlipped, setIsBoardFlipped] = useState(false);
   const [availableThemes, setAvailableThemes] = useState<string[]>([]);
@@ -41,7 +42,12 @@ export function ChessPuzzle({ puzzleId, fen, rating, themes, onNewPuzzle, onDiff
   useEffect(() => {
     const loadThemes = async () => {
       try {
-        const themes = await getAllThemes();
+        let themes: string[];
+        if (selectedDifficulty) {
+          themes = await getThemesForDifficulty(selectedDifficulty);
+        } else {
+          themes = await getAllThemes();
+        }
         setAvailableThemes(themes.slice(0, 12));
       } catch (error) {
         console.error('Failed to load themes:', error);
@@ -51,7 +57,7 @@ export function ChessPuzzle({ puzzleId, fen, rating, themes, onNewPuzzle, onDiff
     if (onThemeSelect) {
       loadThemes();
     }
-  }, [onThemeSelect]);
+  }, [onThemeSelect, selectedDifficulty]);
   
   const handleFlipBoard = () => {
     setIsBoardFlipped(!isBoardFlipped);
@@ -86,21 +92,33 @@ export function ChessPuzzle({ puzzleId, fen, rating, themes, onNewPuzzle, onDiff
           <div className="flex flex-wrap gap-3 justify-center">
             <button
               onClick={() => onDifficultySelect('easy')}
-              className="px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-medium rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg flex flex-col items-center min-w-[120px]"
+              className={`px-6 py-3 font-medium rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg flex flex-col items-center min-w-[120px] ${
+                selectedDifficulty === 'easy' 
+                  ? 'bg-green-600 text-white' 
+                  : 'bg-green-500 hover:bg-green-600 text-white'
+              }`}
             >
               <span className="font-bold">{t('easy')}</span>
               <span className="text-sm opacity-90">{DIFFICULTY_RANGES.easy.min}-{DIFFICULTY_RANGES.easy.max}</span>
             </button>
             <button
               onClick={() => onDifficultySelect('medium')}
-              className="px-6 py-3 bg-yellow-500 hover:bg-yellow-600 text-white font-medium rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg flex flex-col items-center min-w-[120px]"
+              className={`px-6 py-3 font-medium rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg flex flex-col items-center min-w-[120px] ${
+                selectedDifficulty === 'medium' 
+                  ? 'bg-yellow-600 text-white' 
+                  : 'bg-yellow-500 hover:bg-yellow-600 text-white'
+              }`}
             >
               <span className="font-bold">{t('medium')}</span>
               <span className="text-sm opacity-90">{DIFFICULTY_RANGES.medium.min}-{DIFFICULTY_RANGES.medium.max}</span>
             </button>
             <button
               onClick={() => onDifficultySelect('hard')}
-              className="px-6 py-3 bg-red-500 hover:bg-red-600 text-white font-medium rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg flex flex-col items-center min-w-[120px]"
+              className={`px-6 py-3 font-medium rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg flex flex-col items-center min-w-[120px] ${
+                selectedDifficulty === 'hard' 
+                  ? 'bg-red-600 text-white' 
+                  : 'bg-red-500 hover:bg-red-600 text-white'
+              }`}
             >
               <span className="font-bold">{t('hard')}</span>
               <span className="text-sm opacity-90">{DIFFICULTY_RANGES.hard.min}+</span>
